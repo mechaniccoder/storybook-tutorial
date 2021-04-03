@@ -1,10 +1,19 @@
+import { action } from "@storybook/addon-actions";
 import React from "react";
-
+import { Provider } from "react-redux";
 import Task from "./Task";
 
+const store = {
+  getState: () => {
+    return {};
+  },
+  subscribe: () => 0,
+  dispatch: action("dispatch"),
+};
 export default {
   component: Task,
   title: "Task",
+  decorators: [(story) => <Provider store={store}>{story()}</Provider>],
 };
 
 const Template = (args) => <Task {...args} />;
@@ -17,6 +26,7 @@ Default.args = {
     state: "TASK_INBOX",
     updatedAt: new Date(2021, 4, 3, 8, 0),
   },
+  onArchiveTask: action("dispatch"),
 };
 
 export const Pinned = Template.bind({});
